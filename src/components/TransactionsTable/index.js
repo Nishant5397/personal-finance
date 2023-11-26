@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { toast } from "react-toastify";
 import { Input, Table, Select, Radio } from "antd";
 import searchImg from '../../assets/search.svg';
-import './styles.css'
+import './styles.css';
 import { parse, unparse } from 'papaparse';
 const { Option } = Select;
 
@@ -118,6 +118,17 @@ function TransactionsTable({transactions, fetchTransactions, addTransaction}) {
         </div>
         <div className="my-table" >
         <h2>My Transactions</h2>
+        <Select
+          className="select-sort"
+          onChange={(e) => setSortKey(e.target.value)}
+          value={sortKey}
+          placeholder="Filter"
+          allowClear
+        >
+          <Option value="">No Sort</Option>
+          <Option value="date">Sort by Date</Option>
+          <Option value="amount">Sort by Amount</Option>
+        </Select>
         <Radio.Group
             className="input-radio"
             onChange={(e) => setSortKey(e.target.value)}

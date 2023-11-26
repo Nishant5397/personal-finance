@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header/Index'
 import Cards from '../components/Cards'
-import { Modal } from 'antd';
 import AddExpense from '../components/Modals/addExpense';
 import AddIncome from '../components/Modals/addIncome';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import { doc, addDoc, collection, getDocs, query,deleteDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
-import moment from "moment";
 import TransactionsTable from '../components/TransactionsTable';
 import NoTransactions from '../components/NoTransaction';
 import Charts from '../components/Charts';
+import Loader from '../components/Loader';
 
 function Dashboard() {
 const [user] = useAuthState(auth);
@@ -118,10 +117,28 @@ const showExpenseModal = () => {
   let sortedTransactions = transactions.sort((a, b) => {
       return new Date(a.date) - new Date(b.date);
     });
+
+  async function reset() {
+    // const q = query(collection(db, `users/${user.uid}/transactions`));
+    // console.log(q);
+    // const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot);
+    // querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   deleteDoc(doc.data.key);
+    // });
+
+      console.log("resetting");
+      // await deleteDoc(doc(db, `users/${user.uid}/transactions`));
+      // setCurrentBalance([]);
+      // setIncome([]);
+      // setExpenses([]);
+    }
+
   return (
     <div className='container'>
       <Header/>
-      {loading?<p>Loading...</p> : 
+      {loading?<Loader/> : 
       <>
       <div>
       <Cards
@@ -130,8 +147,7 @@ const showExpenseModal = () => {
         currentBalance = {currentBalance}
         showExpenseModal = {showExpenseModal}
         showIncomeModal = {showIncomeModal}
-        // handleExpenseCancel = {handleExpenseCancel}
-        // handleIncomeCancel = {handleIncomeCancel}
+        reset = {reset}
         />
         <AddExpense 
           isExpenseModalVisible={isExpenseModalVisible}
@@ -143,8 +159,15 @@ const showExpenseModal = () => {
           onFinish={onFinish}/>
       </div>
         
-        {transactions.length!=0 ? <Charts transactions ={transactions} sortedTransactions={sortedTransactions}/> : <NoTransactions/>} 
-        <TransactionsTable transactions={transactions} fetchTransactions={fetchTransactions} addTransaction={addTransaction}  />
+        {transactions.length!=0 ? 
+        <Charts transactions ={transactions} 
+        sortedTransactions={sortedTransactions}/> : 
+        <NoTransactions/>} 
+
+        <TransactionsTable 
+        transactions={transactions} 
+        fetchTransactions={fetchTransactions} 
+        addTransaction={addTransaction}  />
       </>
       
       }

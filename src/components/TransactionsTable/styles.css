@@ -21,7 +21,7 @@
   .select-input > div {
     border: none !important;
   }
-.input-flex {
+  .input-flex {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -47,4 +47,30 @@
     align-items: center;
     width: 100%;
     margin-bottom: 1rem;
+  }
+  .input-radio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .select-sort{
+    display: none ;
+  }
+  :where(.css-dev-only-do-not-override-zcfrx9).ant-table-wrapper .ant-table-pagination-right {
+    justify-content: center;
+}
+  @media only screen and (max-width:1000px){
+
+    .select-sort{
+      display: block;
+    }
+    .input-radio{
+      display: none ;
+    }
+
+  }
+  @media only screen and (max-width:600px){
+    .my-table h2{
+      display: none ;
+    }
   }

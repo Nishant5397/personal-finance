@@ -3,7 +3,7 @@ import React from 'react';
 import './styles.css';
 import Button from '../Button';
 
-function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeModal}) {
+function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeModal, reset}) {
   
   return (
     <div>
@@ -11,7 +11,7 @@ function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeMod
         <Card bordered={true} className="my-card">
             <h2>Current Balance</h2>
             <p>₹ {currentBalance}</p>
-            <Button text="Reset Balance" blue={true} />
+            <Button text="Reset Balance" blue={true} onClick={reset}/>
 
         </Card>
         <Card bordered={true} className="my-card">
