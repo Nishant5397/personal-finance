@@ -1,0 +1,50 @@
+.table-container{
+    width: 100vw;
+    padding: 0rem 2rem;  
+  
+}
+.search-box{
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.select-input {
+    width: 15%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem !important;
+    padding: 0.2rem 0.5rem;
+  }
+  .select-input > div {
+    border: none !important;
+  }
+.input-flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 75%;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+    padding: 0rem 0.5rem;
+    margin-left: 10px;
+  }
+  
+  .input-flex input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 0;
+  }
+  
+  .input-flex input:focus {
+    outline: none;
+  }
+  .my-table{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+  }

@@ -5,6 +5,11 @@
     width: 100vw;
     height: 90vh;
 }
+.container{
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
 
 .custom-input {
   border: 0px;

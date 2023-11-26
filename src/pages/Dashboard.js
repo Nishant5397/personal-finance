@@ -10,6 +10,8 @@ import { addDoc, collection, getDocs, query } from "firebase/firestore";
 import { toast } from "react-toastify";
 import moment from "moment";
 import TransactionsTable from '../components/TransactionsTable';
+import NoTransactions from '../components/NoTransaction';
+import Charts from '../components/Charts';
 
 function Dashboard() {
 const [user] = useAuthState(auth);
@@ -40,7 +42,7 @@ const showExpenseModal = () => {
   const onFinish= (values,type)=>{
     const newTransaction = {
       type: type,
-      date: moment(values.date).format("YYYY-MM-DD"),
+      date: values.date.format("YYYY-MM-DD"),
       amount: parseFloat(values.amount),
       tag: values.tag,
       name: values.name,
@@ -75,7 +77,7 @@ const showExpenseModal = () => {
   }
   useEffect(()=>{
     fetchTransactions();
-  },[]);
+  },[user]);
 
   useEffect(() => {
     calculateBalance();
@@ -113,13 +115,16 @@ const showExpenseModal = () => {
     setExpenses(expensesTotal);
     setCurrentBalance(incomeTotal - expensesTotal);
   };
-  const arrayData = Object.values(transactions);
+  let sortedTransactions = transactions.sort((a, b) => {
+      return new Date(a.date) - new Date(b.date);
+    });
   return (
-    <div>
+    <div className='container'>
       <Header/>
       {loading?<p>Loading...</p> : 
       <>
-        <Cards
+      <div>
+      <Cards
         income ={income}
         expenses = {expenses}
         currentBalance = {currentBalance}
@@ -136,8 +141,10 @@ const showExpenseModal = () => {
           isIncomeModalVisible={isIncomeModalVisible}
           handleIncomeCancel={handleIncomeCancel}
           onFinish={onFinish}/>
-
-        <TransactionsTable transactions={transactions}/>
+      </div>
+        
+        {transactions.length!=0 ? <Charts transactions ={transactions} sortedTransactions={sortedTransactions}/> : <NoTransactions/>} 
+        <TransactionsTable transactions={transactions} fetchTransactions={fetchTransactions} addTransaction={addTransaction}  />
       </>
       
       }
