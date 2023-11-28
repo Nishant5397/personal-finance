@@ -24,7 +24,7 @@ function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeMod
                         okText="Yes"
                         cancelText="No"
                     >
-                        <Button text="Reset Balance" blue={true} onClick={reset}/>
+                        <Button text="Reset Balance" blue={true}/>
                     </Popconfirm>
         </Card>
         <Card bordered={true} className="my-card">
