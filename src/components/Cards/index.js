@@ -4,7 +4,7 @@ import './styles.css';
 import Button from '../Button';
 
 function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeModal, reset}) {
-  
+
   const cancel = (e) => {
     console.log(e);
     console.log('Click on No');
@@ -19,7 +19,7 @@ function Cards({income, expenses,currentBalance ,showExpenseModal, showIncomeMod
             <Popconfirm
                         title="Reset the Transaction"
                         description="Are you sure to reset the transactions?"
-                        onConfirm={resetAllTransactions}
+                        onConfirm={reset}
                         onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
