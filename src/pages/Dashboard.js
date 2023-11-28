@@ -12,6 +12,7 @@ import NoTransactions from '../components/NoTransaction';
 import Charts from '../components/Charts';
 import Loader from '../components/Loader';
 
+
 function Dashboard() {
 const [user] = useAuthState(auth);
 const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
@@ -118,22 +119,23 @@ const showExpenseModal = () => {
       return new Date(a.date) - new Date(b.date);
     });
 
-  async function reset() {
-    // const q = query(collection(db, `users/${user.uid}/transactions`));
-    // console.log(q);
-    // const querySnapshot = await getDocs(q);
-    // console.log(querySnapshot);
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   deleteDoc(doc.data.key);
-    // });
+    const reset=async (e) => {
+      try {
+        const docRef = doc(db, `users/${user.uid}`);
+        const subcollectionRef = collection(docRef, "transactions");
+  
+        const subcollectionSnapshot = await getDocs(subcollectionRef);
+  
+        subcollectionSnapshot.forEach(async (subDoc) => {
+          await deleteDoc(subDoc.ref);
+        });
+        fetchTransactions();
+        toast.success("Reset successfully.");
+      } catch (error) {
+        toast.error("Error while Reset");
+      }
+    };
 
-      console.log("resetting");
-      // await deleteDoc(doc(db, `users/${user.uid}/transactions`));
-      // setCurrentBalance([]);
-      // setIncome([]);
-      // setExpenses([]);
-    }
 
   return (
     <div className='container'>
@@ -161,7 +163,9 @@ const showExpenseModal = () => {
         
         {transactions.length!=0 ? 
         <Charts transactions ={transactions} 
-        sortedTransactions={sortedTransactions}/> : 
+        sortedTransactions={sortedTransactions}/> 
+        // <ChartTrial sortedTransaction={sortedTransactions}/>
+        : 
         <NoTransactions/>} 
 
         <TransactionsTable 
